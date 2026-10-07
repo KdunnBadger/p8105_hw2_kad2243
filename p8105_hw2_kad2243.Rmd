@@ -31,9 +31,12 @@ Changing variable names to snake case and selecting variables of interest:
 Keep: line, station, name, station latitude / longitude, 
 routes served, entry, vending, entrance type, and ADA compliance
 
-```{r results = 'hide'}
+Change Variable "entry" to logical var
+
+```{r results = 'hide', message=FALSE, warning=FALSE}
 transit_df = 
     janitor::clean_names(transit_df) %>%
-    select(line, station_name, starts_with("route"), entry, vending, entrance_type, ada)
+    select(line, station_name, starts_with("route"), entry, vending, entrance_type, ada) %>%
+    mutate( entry = case_match( entry, "YES" ~ TRUE, "NO" ~  FALSE))
 
 ```
