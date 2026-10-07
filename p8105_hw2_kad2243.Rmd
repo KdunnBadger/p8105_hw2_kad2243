@@ -1,4 +1,10 @@
 ---
 title: "P8105 HW2 Kad2243"
 output: github_document
+Date: 10/07/2026
 ---
+
+#Problem 1
+The purpose of this problem is to describe NYC subway data.
+
+##NYC Transit
