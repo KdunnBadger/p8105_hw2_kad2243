@@ -12,6 +12,8 @@ Load the tidyverse library:
 library(tidyverse)
 ```
 
+## Data import
+
 Read in the NYC Transit Subway Entrance and Exit data set:
 
 ```{r Transit Data import}
@@ -25,6 +27,8 @@ head(transit_df)
 
 tail(transit_df)
 ```
+
+## Data clean
 
 Changing variable names to snake case and selecting variables of interest:
 
@@ -40,3 +44,8 @@ transit_df =
     mutate( entry = case_match( entry, "YES" ~ TRUE, "NO" ~  FALSE))
 
 ```
+
+## Description of the NYC transit data set
+
+The NYC Transit Subway Entrance and Exit Data set contains **`r nrow(transit_df)`** rows and **`r ncol(transit_df)`** columns.
+The variables included in the set are:  **`r names(transit_df)`**. Line describes which major street or avenue is described, station name is the station or stop, route is the trains stopping at the station, etc. Following import of the raw data, variable names were renamed to include underscores, variables of interest were selected, and the variable "entry" was changed from YES/NO to TRUE/FALSE. The data are not particularly tidy, with some variables containing blanks for missing values and some containing NA. 
