@@ -7,4 +7,14 @@ Date: 10/07/2026
 #Problem 1
 The purpose of this problem is to describe NYC subway data.
 
-##NYC Transit
+```{r setup}
+library(tidyverse)
+```
+
+Read in the NYC Transit Subway Entrance and Exit Dataset
+
+```{r Transit Data import}
+transit_df = read.csv("./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv")
+```
+
+
