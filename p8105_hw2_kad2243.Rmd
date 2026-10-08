@@ -242,6 +242,7 @@ mci_bl =
 Renaming variables with snake case, followed by pivot to a tidy data format.
 Using times as variables, renaming "Baseline" to time 0 for consistency with
 other time points. 
+Changing variable types to numeric. 
 
 ```{r results = 'hide', message=FALSE, warning=FALSE}
 
@@ -249,13 +250,18 @@ mci_amy_long =
   janitor::clean_names(mci_amy) %>%
   pivot_longer(
     baseline:time_8,
-    names_to = "time", 
+    names_to = "time",
     names_prefix = "time_",
     values_to = "amy_ratio") %>%
-  mutate(time = recode(time, "baseline" = "0"))
-
+  mutate(
+    time = as.numeric(recode(time, "baseline" = "0")),
+    amy_ratio = as.numeric(amy_ratio))
 
 ```
+
+- There are **`r nrow(distinct(mci_amy_long, study_id))`** distinct patients included in the biomarker data. 
+
+- The mean amyloid ratio of participants included in the data set at time 0 is **`r round(mean(filter(mci_amy_long, time == 0)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 2 is  **`r round(mean(filter(mci_amy_long, time == 2)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 4 is  **`r round(mean(filter(mci_amy_long, time == 4)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 6 is  **`r round(mean(filter(mci_amy_long, time == 6)$amy_ratio, na.rm = TRUE), 3)`**, and the mean at time 8 is  **`r round(mean(filter(mci_amy_long, time == 8)$amy_ratio, na.rm = TRUE), 3)`**.
 
 
 Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings. 
