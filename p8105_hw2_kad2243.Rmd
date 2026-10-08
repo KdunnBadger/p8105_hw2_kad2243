@@ -138,23 +138,26 @@ For all Trash Wheel Data
 - Renaming variables using clean_names and manually renaming long variables
 - omitting rows that do not include dumpster-specific data
 - rounding sports balls to the nearest integer and converts the result to an integer variable (using as.integer)
+-Adding new var to each set for trash wheel identification
 
 ```{r}
 trash_mr = 
     janitor::clean_names(trash_mr) %>%
     rename(weight_t = weight_tons, volume_y3 = volume_cubic_yards, cig = cigarette_butts ) %>%
     filter( dumpster != "") %>%
-    mutate( sports_balls = as.integer(round(sports_balls,0)))
+    mutate( sports_balls = as.integer(round(sports_balls,0)), trashwheel = "mr")
 
 trash_prof = 
     janitor::clean_names(trash_prof) %>%
     rename(weight_t = weight_tons, volume_y3 = volume_cubic_yards, cig = cigarette_butts ) %>%
-    filter( dumpster != "")
+    filter( dumpster != "") %>%
+    mutate(trashwheel = "prof")
 
 trash_gwn = 
     janitor::clean_names(trash_gwn) %>%
     rename(weight_t = weight_tons, volume_y3 = volume_cubic_yards, cig = cigarette_butts ) %>%
-    filter( dumpster != "")
+    filter( dumpster != "")%>%
+    mutate(trashwheel = "gwn")
 ```
 
 
