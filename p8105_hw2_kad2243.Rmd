@@ -281,6 +281,6 @@ mci_merge =
   left_join(mci_bl,mci_amy_long, by = "id")
 ```
 
-
+  There are **`r nrow(mci_merge)`** observations in the merged dataset, which includes data from baseline and the biomarker set.There are **`r ncol(mci_merge)`** variables.  Variables included in the dataset are: **`r names(mci_merge)`**.
 
 
