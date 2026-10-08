@@ -270,7 +270,7 @@ Check whether some participants appear in only the baseline or amyloid datasets,
 
 ```{r results = 'hide'}
 table(mci_amy_long$id)
-table(mci_bl)
+table(mci_bl$id)
 ```
 
 - Participants 484-495 appear in the amyloid biomarker dataset and not in the baseline dataset
@@ -283,4 +283,10 @@ mci_merge =
 
   There are **`r nrow(mci_merge)`** observations in the merged dataset, which includes data from baseline and the biomarker set.There are **`r ncol(mci_merge)`** variables.  Variables included in the dataset are: **`r names(mci_merge)`**.
 
+Write CSV of merged Baseline and Amyloid Biomarkers to data path:
+
+```{r}
+write_csv(mci_merge, "./Data/mci_merge.csv")
+
+```
 
