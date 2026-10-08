@@ -90,3 +90,49 @@ How many distinct stations serve the A train? Of the stations that serve the A t
   - **`r nrow(distinct(filter(transit_tidy, route_name == "A" & ada == TRUE), line, station_name))`** 
   stations serving the A train are ADA compliant
 
+# Problem 2
+
+The purpose of this problem is to load, clean, and merge multiple excel sheets to one tidy data set
+
+Load the tidyverse library: 
+```{r setup 2,  message=FALSE }
+library(readxl)
+```
+
+
+## Data import
+
+Read in all Trash Wheel data set:
+
+```{r Trash Data import}
+trash_mr = read_excel("./Data/202610 Trash Wheel Collection Data.xlsx", 
+                      sheet = "Mr. Trash Wheel", 
+                      range = cell_cols("A:N"))
+
+trash_prof = read_excel("./Data/202610 Trash Wheel Collection Data.xlsx", 
+                        sheet = "Professor Trash Wheel", 
+                        range = cell_cols("A:M"))
+
+trash_gwn = read_excel("./Data/202610 Trash Wheel Collection Data.xlsx", 
+                       sheet = "Gwynnda the Good Wheel of the W", 
+                       range = cell_cols("A:L"))
+```
+
+Looking at the data sets:
+
+```{r results = 'hide'}
+head(trash_mr)
+tail(trash_mr)
+
+head(trash_prof)
+tail(trash_prof)
+
+head(trash_gwn)
+tail(trash_gwn)
+
+```
+
+## Data clean
+
+
+
