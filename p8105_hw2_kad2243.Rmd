@@ -255,7 +255,8 @@ mci_amy_long =
     values_to = "amy_ratio") %>%
   mutate(
     time = as.numeric(recode(time, "baseline" = "0")),
-    amy_ratio = as.numeric(amy_ratio))
+    amy_ratio = as.numeric(amy_ratio),
+    id = study_id)
 
 ```
 
@@ -263,9 +264,23 @@ mci_amy_long =
 
 - The mean amyloid ratio of participants included in the data set at time 0 is **`r round(mean(filter(mci_amy_long, time == 0)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 2 is  **`r round(mean(filter(mci_amy_long, time == 2)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 4 is  **`r round(mean(filter(mci_amy_long, time == 4)$amy_ratio, na.rm = TRUE), 3)`**, the mean at time 6 is  **`r round(mean(filter(mci_amy_long, time == 6)$amy_ratio, na.rm = TRUE), 3)`**, and the mean at time 8 is  **`r round(mean(filter(mci_amy_long, time == 8)$amy_ratio, na.rm = TRUE), 3)`**.
 
+## Merge Data
 
-Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings. 
+Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings.
 
-Combine the demographic and biomarker datasets so that only participants who appear in both datasets are retained, and briefly describe the resulting dataset; export the result as a CSV to your data directory.
+```{r results = 'hide'}
+table(mci_amy_long$id)
+table(mci_bl)
+```
+
+- Participants 484-495 appear in the amyloid biomarker dataset and not in the baseline dataset
+
+Merging baseline and biomarker data sets by study ID
+```{r}
+mci_merge =
+  left_join(mci_bl,mci_amy_long, by = "id")
+```
+
+
 
 
