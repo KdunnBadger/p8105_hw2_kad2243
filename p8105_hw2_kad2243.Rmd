@@ -49,3 +49,21 @@ transit_df =
 
 The NYC Transit Subway Entrance and Exit Data set contains **`r nrow(transit_df)`** rows and **`r ncol(transit_df)`** columns.
 The variables included in the set are:  **`r names(transit_df)`**. Line describes which major street or avenue is described, station name is the station or stop, route is the trains stopping at the station, etc. Following import of the raw data, variable names were renamed to include underscores, variables of interest were selected, and the variable "entry" was changed from YES/NO to TRUE/FALSE. The data are not particularly tidy, with some variables containing blanks for missing values and some containing NA. 
+
+## Further description of data
+
+- How many distinct stations are there? 
+
+    There are **`r nrow(distinct(transit_df, line, station_name))`** distinct stations included in the data. 
+
+- How many stations are ADA compliant?
+
+    **`r nrow(filter(transit_df, ada == TRUE))`** stations are ADA compliant
+
+- What proportion of station entrances / exits without vending allow entrance?
+
+    **`r round(
+              nrow(filter(transit_df, vending == "NO" & entry == TRUE)) / 
+              nrow(filter(transit_df, vending == "NO")) ,
+              2)
+              `** of station entrances/exits without vending allow entrance 
