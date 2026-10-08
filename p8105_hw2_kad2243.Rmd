@@ -205,7 +205,7 @@ head(mci_amy)
 ```
 
 
-## Data clean
+## Data clean for baseline data
 
 Changing variable names to snake case, changine male and female to character variables, changing apoe4 status to a logical variable, removing any participants with an age of MCI onset (did not meet inclusion criteria - had MCI at baseline)
 - Filtering those that had MCI at baseline by taking age at onset and comparing to current age at baseline
@@ -234,4 +234,32 @@ mci_bl =
 - What proportion of women in the study are APOE4 carriers?
 
   **`r nrow(filter(mci_bl, sex=="female" & apoe4 == TRUE))/nrow(filter(mci_bl, sex=="female"))`** of women in the study are APOE4   carriers. 
+  
+  
+
+## Data clean for Biomarkers
+
+Renaming variables with snake case, followed by pivot to a tidy data format.
+Using times as variables, renaming "Baseline" to time 0 for consistency with
+other time points. 
+
+```{r results = 'hide', message=FALSE, warning=FALSE}
+
+mci_amy_long =
+  janitor::clean_names(mci_amy) %>%
+  pivot_longer(
+    baseline:time_8,
+    names_to = "time", 
+    names_prefix = "time_",
+    values_to = "amy_ratio") %>%
+  mutate(time = recode(time, "baseline" = "0"))
+
+
+```
+
+
+Check whether some participants appear in only the baseline or amyloid datasets, and comment on your findings. 
+
+Combine the demographic and biomarker datasets so that only participants who appear in both datasets are retained, and briefly describe the resulting dataset; export the result as a CSV to your data directory.
+
 
