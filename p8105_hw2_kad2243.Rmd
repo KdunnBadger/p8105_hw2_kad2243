@@ -183,3 +183,23 @@ trash_tidy=
 
   The total number of cigarette butts collected by Gwynnda in June of 2022
   **`r sum(filter(trash_tidy, trashwheel == "gwn"& month == "June" & year == 2022 )$cig)`**
+  
+  
+# Problem 3
+
+## Data import
+
+Read in baseline and amyloid MCI sheets
+
+```{r MCI import}
+mci_bl = read.csv("./Data/data_mci/MCI_baseline.csv")
+mci_amy = read.csv("./Data/data_mci/mci_amyloid.csv")
+```
+
+
+Looking at the data set:
+
+```{r results = 'hide'}
+head(mci_bl)
+head(mci_amy)
+```
