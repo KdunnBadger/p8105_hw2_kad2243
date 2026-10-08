@@ -169,3 +169,17 @@ trash_tidy=
   bind_rows(trash_mr, trash_prof, trash_gwn)
 ```
 
+# Describing the data set 
+- Note the number of observations in the resulting dataset, and give examples of key variables. 
+
+  There are **`r nrow(trash_tidy)`** observations in the merged dataset, which includes data from Mr. Trash Wheel, Professor       Trash Wheel, and Gwynnda the Good Wheel of the W. Variables included in the dataset are: **`r names(trash_tidy)`**. Weight in   tons and cubic yards are key variables because they can quantify amounts of trash collected by each wheel. 
+
+- For available data, what was the total weight of trash collected by Professor Trash Wheel? 
+  
+  The total weight of trash collected by Professor Trash Wheel was
+  **`r sum(filter(trash_tidy, trashwheel == "prof")$weight_t)`**
+
+- What was the total number of cigarette butts collected by Gwynnda in June of 2022?
+
+  The total number of cigarette butts collected by Gwynnda in June of 2022
+  **`r sum(filter(trash_tidy, trashwheel == "gwn"& month == "June" & year == 2022 )$cig)`**
