@@ -192,8 +192,8 @@ trash_tidy=
 Read in baseline and amyloid MCI sheets
 
 ```{r MCI import}
-mci_bl = read.csv("./Data/data_mci/MCI_baseline.csv")
-mci_amy = read.csv("./Data/data_mci/mci_amyloid.csv")
+mci_bl = read.csv("./Data/data_mci/MCI_baseline.csv", skip =1)
+mci_amy = read.csv("./Data/data_mci/mci_amyloid.csv", skip =1)
 ```
 
 
@@ -203,3 +203,27 @@ Looking at the data set:
 head(mci_bl)
 head(mci_amy)
 ```
+
+
+## Data clean
+
+Changing variable names to snake case, changine male and female to character variables, changing apoe4 status to a logical variable, removing any participants with an age of MCI onset (did not meet inclusion criteria - had MCI at baseline)
+- Filtering those that had MCI at baseline by taking age at onset and comparing to current age at baseline
+
+```{r results = 'hide', message=FALSE, warning=FALSE}
+
+mci_bl = 
+    janitor::clean_names(mci_bl) %>%
+    mutate(sex = case_match( sex, 0 ~ "female", 1 ~ "male"),
+           apoe4 = case_match(apoe4, 0 ~ FALSE, 1 ~ TRUE),
+           age_at_onset = as.numeric(age_at_onset)) %>%
+    filter(age_at_onset <= current_age)
+
+```
+
+How many participants were recruited, and of these how many develop MCI? 
+
+What is the average baseline age? 
+
+What proportion of women in the study are APOE4 carriers?
+
