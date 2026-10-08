@@ -48,7 +48,7 @@ transit_df =
 ## Description of the NYC transit data set
 
 The NYC Transit Subway Entrance and Exit Data set contains **`r nrow(transit_df)`** rows and **`r ncol(transit_df)`** columns.
-The variables included in the set are:  **`r names(transit_df)`**. Line describes which major street or avenue is described, station name is the station or stop, route is the trains stopping at the station, etc. Following import of the raw data, variable names were renamed to include underscores, variables of interest were selected, and the variable "entry" was changed from YES/NO to TRUE/FALSE. The data are not particularly tidy, with some variables containing blanks for missing values and some containing NA. 
+The variables included in the set are:  **`r names(transit_df)`**. Line describes which major street or avenue is described, station name is the station or stop, route is the trains stopping at the station, etc. Following import of the raw data, variable names were renamed to include underscores, variables of interest were selected, and the variable "entry" was changed from YES/NO to TRUE/FALSE. The data are not particularly tidy, routes are captured across columns rather than as distinct observation, so route and route name are combined, with some route variables containing blanks for missing values and some containing NA. 
 
 ## Further description of data
 
@@ -67,3 +67,26 @@ The variables included in the set are:  **`r names(transit_df)`**. Line describe
               nrow(filter(transit_df, vending == "NO")) ,
               2)
               `** of station entrances/exits without vending allow entrance 
+            
+## Distinct Route Number and Names
+
+Reformat data so that route number and route name are distinct variables.
+
+```{r}
+transit_tidy = transit_df %>%
+  mutate(across(route1:route11, as.character)) %>%
+  pivot_longer(
+    cols = route1:route11,
+    names_to = "route_number",
+    names_prefix = "route",
+    values_to = "route_name",
+    values_drop_na = TRUE
+  )
+```
+
+How many distinct stations serve the A train? Of the stations that serve the A train, how many are ADA compliant?
+
+  - **`r nrow(distinct(filter(transit_tidy, route_name == "A"), line, station_name))`** stations serve the A train
+  - **`r nrow(distinct(filter(transit_tidy, route_name == "A" & ada == TRUE), line, station_name))`** 
+  stations serving the A train are ADA compliant
+
